@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(78, 70, 66);
+}
+
+.wrapper {
+    width: 90%;
+    height: 1000px;
+    margin: 0 auto;
+}
+
+#canvas {
+    border: 1px solid black;
+    background-color: rgb(163, 149, 149);
+}
