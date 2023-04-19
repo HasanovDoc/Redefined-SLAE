@@ -20,4 +20,4 @@ ctx.fillStyle = 'blue';
 ctx.fillRect(50, 20, 10, 10); // начальная точка
 ctx.fillRect(50, 100, 10, 10); // конечная точка
 
-canvas.addEventListener('click', )
+canvas.addEventListener('click', drawBezie);
