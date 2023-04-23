@@ -21,6 +21,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); */
 }
 
 .wrapper {
@@ -76,6 +78,7 @@
     color: #EEEEEE;
     padding: 2px 6px 2px 6px;
     margin-top: 1px;
+    user-select: none;
 }
 
 .cell {
