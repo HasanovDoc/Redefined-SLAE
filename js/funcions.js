@@ -59,8 +59,10 @@ addRowButton.addEventListener('click', () => {
 });
 //////////////////////json
 const saveButton = document.querySelector('.saveButton')
+const form = document.querySelector('.form');
 
-saveButton.addEventListener('click', () => {
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
     // Получаем матрицу A из таблицы
     let aMatrix = [];
     let rows = document.querySelectorAll(".matrix-body tr");
@@ -90,6 +92,12 @@ saveButton.addEventListener('click', () => {
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
+            // let data
+            // try {
+            //     console.log(JSON.parse(xhr.responseText))
+            // } catch (error) {
+
+            // }
             console.log("Response: ", xhr.responseText);
 
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
