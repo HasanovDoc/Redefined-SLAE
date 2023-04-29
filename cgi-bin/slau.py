@@ -15,9 +15,18 @@ data = json.loads(post_body)
 # Далее можно работать с данными, например:
 a_matrix = data['aMatrix']
 b_matrix = data['bMatrix']
-rangMatrix = np.linalg.matrix_rank(a_matrix)
 
+A = np.array(a_matrix)
+b = np.array(b_matrix)
 
+A = A.astype(int)
+b = b.astype(int)
+
+ATA = A.T.dot(A)
+rangMatrix = np.linalg.matrix_rank(A) #Не вычисляет правильно
+ATA = ATA.tolist()
+jopa = 5
 print("Content-type: application/json")
 print()
-print(json.dumps([a_matrix, b_matrix]))
+#print(json.dumps([a_matrix]))
+print(json.dumps({'ATA': ATA}))#Не правильно

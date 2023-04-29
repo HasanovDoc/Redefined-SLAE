@@ -61,6 +61,7 @@ addRowButton.addEventListener('click', () => {
 const saveButton = document.querySelector('.saveButton')
 const form = document.querySelector('.form');
 
+const section_2 = document.querySelector('.section_2')
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     // Получаем матрицу A из таблицы
@@ -92,13 +93,16 @@ form.addEventListener('submit', (e) => {
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // let data
-            // try {
-            //     console.log(JSON.parse(xhr.responseText))
-            // } catch (error) {
 
-            // }
+
+            const res = JSON.parse(xhr.responseText);
+            let ATA = res.ATA;
+
+            document.querySelector('.step_1 p').textContent = ATA;
+            section_2.classList.remove('hiden');
+
             console.log("Response: ", xhr.responseText);
+            console.log('ATA: ', res.ATA);
 
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
             console.error("Ошибка: ", xhr.statusText);
@@ -108,4 +112,5 @@ form.addEventListener('submit', (e) => {
         aMatrix: aMatrix,
         bMatrix: bMatrix
     }));
+
 });

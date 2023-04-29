@@ -31,4 +31,4 @@ def tests():
 
     check_input_data(A)
 
-tests()
+#tests()
