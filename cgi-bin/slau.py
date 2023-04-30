@@ -23,10 +23,10 @@ A = A.astype(int)
 b = b.astype(int)
 
 ATA = A.T.dot(A)
-rangMatrix = np.linalg.matrix_rank(A) #Не вычисляет правильно
-ATA = ATA.tolist()
-jopa = 5
+rangMatrix = np.linalg.matrix_rank(A)
+
 print("Content-type: application/json")
 print()
 #print(json.dumps([a_matrix]))
-print(json.dumps({'ATA': ATA}))#Не правильно
+print(json.dumps({'ATA': {'matrix': ATA.tolist(),
+                          'label': "Транспонируем матрицу \'A\': "}}))
