@@ -62,6 +62,7 @@ const saveButton = document.querySelector('.saveButton')
 const form = document.querySelector('.form');
 
 const section_2 = document.querySelector('.section_2')
+const table_1 = document.querySelector('.step_1 table')
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     // Получаем матрицу A из таблицы
@@ -99,16 +100,17 @@ form.addEventListener('submit', (e) => {
             let ATALabel = res.ATA.label;
             let ATAMatrix = res.ATA.matrix;
 
-
-            printMatrix(document.querySelector('.step_1 table'), ATAMatrix);
+            clearMatrix(table_1);
+            printMatrix(table_1, ATAMatrix);
             document.querySelector('.step_1 p').innerHTML = ATALabel;
-            //document.querySelector('.step_1__matr').innerHTML = ATAMartix;
-            section_2.classList.remove('hiden');
-            //Checked
-            console.log("Response: ", xhr.responseText);
-            console.log('ATA: ', res.ATA.label);
-            /////////
 
+            section_2.classList.remove('hiden');
+
+
+            //Check response
+            console.log("Response: ", xhr.responseText);
+            //console.log('ATA: ', res.ATA.matrix);
+            /////////
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
             console.error("Ошибка: ", xhr.statusText);
         }
@@ -134,5 +136,11 @@ function printMatrix(table, matrix) {
         }
 
         table.appendChild(row);
+    }
+}
+
+function clearMatrix(table) {
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
     }
 }
