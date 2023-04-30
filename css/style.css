@@ -110,7 +110,7 @@
     margin-top: 20px;
 }
 
-.steps {
+.steps__container {
     width: 50%;
     height: auto;
     margin: 0 auto;
@@ -119,10 +119,14 @@
     padding: 1% 0%;
 }
 
-.steps p {
+.steps {
     width: 85%;
     height: auto;
     margin: 0 auto;
+}
+
+.steps p {
+    overflow: auto;
 }
 
 .hiden {
