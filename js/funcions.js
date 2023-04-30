@@ -4,6 +4,7 @@ let numColumns = aMatrixTable.querySelector("tr").childElementCount;
 let rows = aMatrixTable.querySelectorAll("tr");
 
 let addColumnButton = document.querySelector(".n-add");
+
 addColumnButton.addEventListener('click', () => {
     rows = aMatrixTable.querySelectorAll("tr");
     numColumns++;
@@ -33,6 +34,7 @@ addRowButton.addEventListener('click', () => {
     numColumns = aMatrixTable.querySelector("tr").childElementCount;
     rows = aMatrixTable.querySelectorAll("tr");
 
+
     for (let i = 0; i < numColumns; i++) {
         let newCell = document.createElement("td");
         let newInput = document.createElement("input");
@@ -46,6 +48,7 @@ addRowButton.addEventListener('click', () => {
     // Добавляем новую строку в таблицу
     aMatrixTable.appendChild(aNewRow);
 
+    //Добавляем новую строку в матрицу b
     let newCell = document.createElement("td");
     let newInput = document.createElement("input");
     newInput.type = "text";
@@ -62,7 +65,8 @@ const saveButton = document.querySelector('.saveButton')
 const form = document.querySelector('.form');
 
 const section_2 = document.querySelector('.section_2')
-const table_1 = document.querySelector('.step_1 table')
+const table_1 = document.querySelector('.step_1')
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     // Получаем матрицу A из таблицы
@@ -96,20 +100,14 @@ form.addEventListener('submit', (e) => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
 
-
-            let ATALabel = res.ATA.label;
-            let ATAMatrix = res.ATA.matrix;
-
             clearMatrix(table_1);
-            printMatrix(table_1, ATAMatrix);
-            document.querySelector('.step_1 p').innerHTML = ATALabel;
+            printMatrix(table_1, res.result.AT);
 
             section_2.classList.remove('hiden');
 
 
             //Check response
             console.log("Response: ", xhr.responseText);
-            //console.log('ATA: ', res.ATA.matrix);
             /////////
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
             console.error("Ошибка: ", xhr.statusText);
@@ -122,8 +120,12 @@ form.addEventListener('submit', (e) => {
 
 });
 
-function printMatrix(table, matrix) {
-    //let table = document.querySelector('.step_1 table');
+function printMatrix(table, jsonVar) { //Выводим матрицу в <table>. arg:(куда выводить, что выводить)
+    let matrix = jsonVar.matrix;
+    let label = jsonVar.label;
+    let tab = table.querySelector('table');
+
+    table.querySelector('p').innerHTML = label
 
     for (let i = 0; i < matrix.length; i++) {
         let row = document.createElement("tr");
@@ -135,12 +137,14 @@ function printMatrix(table, matrix) {
             row.appendChild(cell);
         }
 
-        table.appendChild(row);
+        tab.appendChild(row);
     }
 }
 
-function clearMatrix(table) {
-    while (table.firstChild) {
-        table.removeChild(table.firstChild);
+function clearMatrix(table) { //Очистка матрицы. arg:(какой <table> чистим)
+    let tab = table.querySelector('table');
+
+    while (tab.firstChild) {
+        tab.removeChild(tab.firstChild);
     }
 }
