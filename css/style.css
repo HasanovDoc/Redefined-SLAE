@@ -125,7 +125,7 @@
     margin: 0 auto;
 }
 
-.steps p {
+.steps__item p {
     overflow: auto;
 }
 
