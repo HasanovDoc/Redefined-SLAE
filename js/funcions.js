@@ -93,16 +93,21 @@ form.addEventListener('submit', (e) => {
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-
-
             const res = JSON.parse(xhr.responseText);
-            let ATA = res.ATA;
 
-            document.querySelector('.step_1 p').textContent = ATA;
+
+            let ATALabel = res.ATA.label;
+            let ATAMatrix = res.ATA.matrix;
+
+
+            printMatrix(document.querySelector('.step_1 table'), ATAMatrix);
+            document.querySelector('.step_1 p').innerHTML = ATALabel;
+            //document.querySelector('.step_1__matr').innerHTML = ATAMartix;
             section_2.classList.remove('hiden');
-
+            //Checked
             console.log("Response: ", xhr.responseText);
-            console.log('ATA: ', res.ATA);
+            console.log('ATA: ', res.ATA.label);
+            /////////
 
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
             console.error("Ошибка: ", xhr.statusText);
@@ -114,3 +119,20 @@ form.addEventListener('submit', (e) => {
     }));
 
 });
+
+function printMatrix(table, matrix) {
+    //let table = document.querySelector('.step_1 table');
+
+    for (let i = 0; i < matrix.length; i++) {
+        let row = document.createElement("tr");
+
+        for (let j = 0; j < matrix[i].length; j++) {
+            let cell = document.createElement("td");
+            let cellText = document.createTextNode(matrix[i][j]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+
+        table.appendChild(row);
+    }
+}
