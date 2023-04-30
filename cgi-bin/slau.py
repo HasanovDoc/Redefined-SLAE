@@ -24,7 +24,7 @@ b = b.astype(int)
 
 AT = A.T
 ATA = A.T.dot(A)
-ATAD = np.linalg.det(ATA)
+
 ATb = AT.dot(b)
 ATA_1 = np.linalg.inv(ATA)
 X = ATA_1.dot(ATb)
@@ -40,11 +40,7 @@ resultMNK = {
         },
         'ATA': {
             'matrix': ATA.tolist(),
-            'label': "Умножаем тринспонированную матрицу \'A\' на пераоначальную матрицу \'A\': "
-        },
-        'ATAD': {
-            'matrix': ATAD.tolist(),
-            'label': "Находим определитель: "
+            'label': "Умножаем тринспонированную матрицу \'A\' на первоначальную матрицу \'A\': "
         },
         'ATA_1': {
             'matrix': ATA_1.tolist(),
