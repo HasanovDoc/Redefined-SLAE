@@ -22,11 +22,44 @@ b = np.array(b_matrix)
 A = A.astype(int)
 b = b.astype(int)
 
+AT = A.T
 ATA = A.T.dot(A)
-rangMatrix = np.linalg.matrix_rank(A)
+ATAD = np.linalg.det(ATA)
+ATb = AT.dot(b)
+ATA_1 = np.linalg.inv(ATA)
+X = ATA_1.dot(ATb)
+#rangMatrix = np.linalg.matrix_rank(A)
 
 print("Content-type: application/json")
 print()
-#print(json.dumps([a_matrix]))
-print(json.dumps({'ATA': {'matrix': ATA.tolist(),
-                          'label': "Транспонируем матрицу \'A\': "}}))
+resultMNK = {
+    'result': {
+        'AT': {
+            'matrix': AT.tolist(),
+            'label': "Транспонируем матрицу \'A\': "
+        },
+        'ATA': {
+            'matrix': ATA.tolist(),
+            'label': "Умножаем тринспонированную матрицу \'A\' на пераоначальную матрицу \'A\': "
+        },
+        'ATAD': {
+            'matrix': ATAD.tolist(),
+            'label': "Находим определитель: "
+        },
+        'ATA_1': {
+            'matrix': ATA_1.tolist(),
+            'label': "Находим обратную матрицу: "
+        },
+        'ATb': {
+            'matrix': ATb.tolist(),
+            'label': "Умножаем транспонированную матрицу \'A\' на вектор \'b\': "
+        },
+        'X': {
+            'matrix': X.tolist(),
+            'label': "Умножаем обратную матрицу на произведение, транспонированой матирцы и вектора \'b\': "
+        }
+    }
+}
+
+
+print(json.dumps(resultMNK))
