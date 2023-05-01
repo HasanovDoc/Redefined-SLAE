@@ -15,47 +15,49 @@ data = json.loads(post_body)
 # Далее можно работать с данными, например:
 a_matrix = data['aMatrix']
 b_matrix = data['bMatrix']
+method = data['method']
 
 A = np.array(a_matrix)
 b = np.array(b_matrix)
 
 A = A.astype(int)
 b = b.astype(int)
+if method == 'MNK':
+    AT = A.T
+    ATA = A.T.dot(A)
 
-AT = A.T
-ATA = A.T.dot(A)
+    ATb = AT.dot(b)
+    ATA_1 = np.linalg.inv(ATA)
+    X = ATA_1.dot(ATb)
 
-ATb = AT.dot(b)
-ATA_1 = np.linalg.inv(ATA)
-X = ATA_1.dot(ATb)
+    result = {
+        'result': {
+            'AT': {
+                'matrix': AT.tolist(),
+                'label': "Транспонируем матрицу \'A\': "
+            },
+            'ATA': {
+                'matrix': ATA.tolist(),
+                'label': "Умножаем тринспонированную матрицу \'A\' на первоначальную матрицу \'A\': "
+            },
+            'ATA_1': {
+                'matrix': ATA_1.tolist(),
+                'label': "Находим обратную матрицу: "
+            },
+            'ATb': {
+                'matrix': ATb.tolist(),
+                'label': "Умножаем транспонированную матрицу \'A\' на вектор \'b\': "
+            },
+            'X': {
+                'matrix': X.tolist(),
+                'label': "Умножаем обратную матрицу на произведение, транспонированой матирцы и вектора \'b\': "
+            }
+        }
+    }
+
+
 #rangMatrix = np.linalg.matrix_rank(A)
 
 print("Content-type: application/json")
 print()
-resultMNK = {
-    'result': {
-        'AT': {
-            'matrix': AT.tolist(),
-            'label': "Транспонируем матрицу \'A\': "
-        },
-        'ATA': {
-            'matrix': ATA.tolist(),
-            'label': "Умножаем тринспонированную матрицу \'A\' на первоначальную матрицу \'A\': "
-        },
-        'ATA_1': {
-            'matrix': ATA_1.tolist(),
-            'label': "Находим обратную матрицу: "
-        },
-        'ATb': {
-            'matrix': ATb.tolist(),
-            'label': "Умножаем транспонированную матрицу \'A\' на вектор \'b\': "
-        },
-        'X': {
-            'matrix': X.tolist(),
-            'label': "Умножаем обратную матрицу на произведение, транспонированой матирцы и вектора \'b\': "
-        }
-    }
-}
-
-
-print(json.dumps(resultMNK))
+print(json.dumps(result))

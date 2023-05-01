@@ -71,6 +71,7 @@ const table_3 = document.querySelector('.step_3');
 const table_4 = document.querySelector('.step_4');
 const table_5 = document.querySelector('.step_5');
 const table_6 = document.querySelector('.step_6');
+const select = document.querySelector('#method');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -105,14 +106,16 @@ form.addEventListener('submit', (e) => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
 
-            clearMatrix(table_1);
-            printMatrix(table_1, res.result.AT);
-            printMatrix(table_2, res.result.ATA);
-            printMatrix(table_3, res.result.ATA_1);
-            printMatrix(table_4, res.result.ATb);
-            printMatrix(table_5, res.result.X);
+            if (select.value == 'MNK') {
+                clearMatrix(table_1);
+                printMatrix(table_1, res.result.AT);
+                printMatrix(table_2, res.result.ATA);
+                printMatrix(table_3, res.result.ATA_1);
+                printMatrix(table_4, res.result.ATb);
+                printMatrix(table_5, res.result.X);
 
-            section_2.classList.remove('hiden');
+                section_2.classList.remove('hiden');
+            }
 
 
             //Check response
@@ -124,7 +127,8 @@ form.addEventListener('submit', (e) => {
     };
     xhr.send(JSON.stringify({
         aMatrix: aMatrix,
-        bMatrix: bMatrix
+        bMatrix: bMatrix,
+        method: select.value
     }));
 
 });
