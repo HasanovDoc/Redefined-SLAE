@@ -31,8 +31,9 @@ def check_input_data(matrix):
         return False
 
     triangle_matrix = gauss_elimination(matrix)
+    data_is_good = not has_zero_row(triangle_matrix)
 
-    return has_zero_row(triangle_matrix)
+    return data_is_good
 
 def tests():
     A = np.array([[1, 2, 4],

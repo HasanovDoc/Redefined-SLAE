@@ -6,6 +6,8 @@ import sys
 import os
 import numpy as np
 
+from check_input_data import check_input_data
+
 content_len = int(os.environ.get('CONTENT_LENGTH', 0))
 post_body = sys.stdin.read(content_len)
 
@@ -22,40 +24,47 @@ b = np.array(b_matrix)
 
 A = A.astype(int)
 b = b.astype(int)
-if method == 'MNK':
-    AT = A.T
-    ATA = A.T.dot(A)
+def get_solution():
+    if method == 'MNK':
+        AT = A.T
+        if check_input_data(AT):
+            return {
+                'error': 'Столбцы матрицы линейно зависимы'
+            }
+        ATA = A.T.dot(A)
 
-    ATb = AT.dot(b)
-    ATA_1 = np.linalg.inv(ATA)
-    X = ATA_1.dot(ATb)
+        ATb = AT.dot(b)
+        ATA_1 = np.linalg.inv(ATA)
+        X = ATA_1.dot(ATb)
 
-    result = {
-        'result': {
-            'AT': {
-                'matrix': AT.tolist(),
-                'label': "Транспонируем матрицу \'A\': "
-            },
-            'ATA': {
-                'matrix': ATA.tolist(),
-                'label': "Умножаем тринспонированную матрицу \'A\' на первоначальную матрицу \'A\': "
-            },
-            'ATA_1': {
-                'matrix': ATA_1.tolist(),
-                'label': "Находим обратную матрицу: "
-            },
-            'ATb': {
-                'matrix': ATb.tolist(),
-                'label': "Умножаем транспонированную матрицу \'A\' на вектор \'b\': "
-            },
-            'X': {
-                'matrix': X.tolist(),
-                'label': "Умножаем обратную матрицу на произведение, транспонированой матирцы и вектора \'b\': "
+        result = {
+            'result': {
+                'AT': {
+                    'matrix': AT.tolist(),
+                    'label': "Транспонируем матрицу \'A\': "
+                },
+                'ATA': {
+                    'matrix': ATA.tolist(),
+                    'label': "Умножаем тринспонированную матрицу \'A\' на первоначальную матрицу \'A\': "
+                },
+                'ATA_1': {
+                    'matrix': ATA_1.tolist(),
+                    'label': "Находим обратную матрицу: "
+                },
+                'ATb': {
+                    'matrix': ATb.tolist(),
+                    'label': "Умножаем транспонированную матрицу \'A\' на вектор \'b\': "
+                },
+                'X': {
+                    'matrix': X.tolist(),
+                    'label': "Умножаем обратную матрицу на произведение, транспонированой матирцы и вектора \'b\': "
+                }
             }
         }
-    }
+        return result
 
 
+result = get_solution()
 #rangMatrix = np.linalg.matrix_rank(A)
 
 print("Content-type: application/json")
