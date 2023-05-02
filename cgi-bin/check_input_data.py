@@ -3,6 +3,10 @@ import numpy as np
 
 
 def check_input_data(matrix):
+    '''
+    Для импорта функции нужно использовать такую строку
+    from <название_файла> import check_input_data
+    '''
     def gauss_elimination(A):
         """
         Функция, которая приводит матрицу A к ступенчатому виду методом Гаусса
@@ -20,15 +24,23 @@ def check_input_data(matrix):
                 A[i] = A[i] - A[i, r] / A[r, r] * A[r]
         return A
 
-    print(np.linalg.matrix_rank(matrix))
-    print(gauss_elimination(matrix))
+    def has_zero_row(matrix):
+        for row in matrix:
+            if all(element == 0 for element in row):
+                return True
+        return False
+
+    triangle_matrix = gauss_elimination(matrix)
+
+    return has_zero_row(triangle_matrix)
 
 def tests():
     A = np.array([[1, 2, 4],
                   [1, 3, 5],
-                  [1, 5, 7],
-                  [1, 4, 6]])
+                  [4, 5, 7],
+                  [2, 4, 6]])
 
-    check_input_data(A)
+    has = check_input_data(A)
+    print(has)
 
-#tests()
+# tests()
