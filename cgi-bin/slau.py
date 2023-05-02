@@ -6,7 +6,7 @@ import sys
 import os
 import numpy as np
 
-from check_input_data import check_input_data
+from check_input_data import input_data_is_correct
 
 content_len = int(os.environ.get('CONTENT_LENGTH', 0))
 post_body = sys.stdin.read(content_len)
@@ -27,7 +27,7 @@ b = b.astype(int)
 def get_solution():
     if method == 'MNK':
         AT = A.T
-        if check_input_data(AT):
+        if not input_data_is_correct(AT):
             return {
                 'error': 'Столбцы матрицы линейно зависимы'
             }

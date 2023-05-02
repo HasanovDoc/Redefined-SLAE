@@ -2,7 +2,7 @@ import numpy as np
 
 
 
-def check_input_data(matrix):
+def input_data_is_correct(matrix):
     '''
     Для импорта функции нужно использовать такую строку
     from <название_файла> import check_input_data
@@ -31,9 +31,9 @@ def check_input_data(matrix):
         return False
 
     triangle_matrix = gauss_elimination(matrix)
-    data_is_good = not has_zero_row(triangle_matrix)
+    data_is_correct = not has_zero_row(triangle_matrix)
 
-    return data_is_good
+    return data_is_correct
 
 def tests():
     A = np.array([[1, 2, 4],
@@ -41,7 +41,7 @@ def tests():
                   [4, 5, 7],
                   [2, 4, 6]])
 
-    has = check_input_data(A)
+    has = input_data_is_correct(A)
     print(has)
 
 # tests()
