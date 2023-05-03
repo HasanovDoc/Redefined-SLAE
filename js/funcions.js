@@ -106,15 +106,19 @@ form.addEventListener('submit', (e) => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const res = JSON.parse(xhr.responseText);
 
-            if (select.value == 'MNK') {
-                clearMatrix(table_1);
-                printMatrix(table_1, res.result.AT);
-                printMatrix(table_2, res.result.ATA);
-                printMatrix(table_3, res.result.ATA_1);
-                printMatrix(table_4, res.result.ATb);
-                printMatrix(table_5, res.result.X);
+            if (res.error) {
+                alert(res.error)
+            } else {
+                if (select.value == 'MNK') {
+                    clearMatrix(table_1);
+                    printMatrix(table_1, res.result.AT);
+                    printMatrix(table_2, res.result.ATA);
+                    printMatrix(table_3, res.result.ATA_1);
+                    printMatrix(table_4, res.result.ATb);
+                    printMatrix(table_5, res.result.X);
 
-                section_2.classList.remove('hiden');
+                    section_2.classList.remove('hiden');
+                }
             }
 
 
